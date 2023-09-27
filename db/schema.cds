@@ -2,7 +2,6 @@ namespace disquera;
 
 using
 {
-    cuid,
     managed
 }
 from '@sap/cds/common';
@@ -14,37 +13,42 @@ type Info
     genero : String(50);
 }
 
-entity Musicos : cuid, managed
+entity Musicos : managed
 {
+    key ID: Integer;
     nombre : String(100);
     bandas : Association to many MusicosBandas on bandas.musico = $self;
     info : Info;
 }
 
-entity Bandas : cuid, managed
+entity Bandas : managed
 {
+    key ID: Integer;
     nombre : String(100);
     musicos : Association to one MusicosBandas on musicos.banda = $self;
     discos : Association to many Discos on discos.banda = $self;
     genero: String(50);
 }
 
-entity Discos : cuid, managed
+entity Discos : managed
 {
+    key ID: Integer;
     banda : Association to one Bandas;
     centros : Association to many CentrosDiscos on centros.disco = $self;
     nombre : String(100);
     canciones: Integer
 }
 
-entity Centros : cuid, managed
+entity Centros : managed
 {
+    key ID: Integer;
     nombre : String(100);
     discos : Association to one CentrosDiscos on discos.centro = $self;
 }
 
-entity Sesiones : cuid, managed
+entity Sesiones : managed
 {
+    ID: Integer;
     horas : Integer;
     disco : Association to  Discos;
     musico : Association to  Musicos;
