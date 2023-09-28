@@ -8,9 +8,13 @@ from '@sap/cds/common';
 
 type Info
 {
-    dni : Integer;
     rol : String(50);
     genero : String(50);
+}
+
+aspect musicoSesion {
+    musico: Association to Musicos;
+    hora: Time;        
 }
 
 entity Musicos : managed
@@ -46,12 +50,13 @@ entity Centros : managed
     discos : Association to one CentrosDiscos on discos.centro = $self;
 }
 
-entity Sesiones : managed
+entity Sesiones : managed, musicoSesion
 {
-    ID: Integer;
+    key ID: Integer;
     horas : Integer;
-    disco : Association to  Discos;
-    musico : Association to  Musicos;
+    disco : Composition of one Discos;
+    promocion: Boolean;
+    
 }
 
 entity MusicosBandas
